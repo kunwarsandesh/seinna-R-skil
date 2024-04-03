@@ -11,7 +11,36 @@ knitr::opts_chunk$set(echo = TRUE)
 
 
 ```{r}
+#a
 bss <- read_csv2("https://ahj.hi.is/kaupskra.csv", locale = locale(encoding = "ISO8859-1"))
+
+#b
+bss <- bss %>%
+  filter(fullbuid == 1, 
+         tegund %in% c("Fjolbyli", "Serbyli"),
+         onothaefur_samningur == 1)
+
+#c
+bss <- bss %>%
+  mutate(fermetraverd = kaupverd / einflm)
+
+#d
+bss <- bss %>%
+  mutate(utgdag = as.Date(utgdag, format = "%Y-%m-%d"),
+         ar = year(utgdag))
+
+#e
+bss_selected <- bss %>%
+  filter(postnr %in% c(221, 200, 210))
+
+serbyli_count <- bss_selected %>%
+  filter(tegund == "Serbyli") %>%
+  group_by(postnr) %>%
+  summarise(fjoldi_serbyli = n())
+
+serbyli_count %>%
+  kbl(col.names = c("Póstnr.", "Fjöldi Sérbýla"), align = "c") %>%
+  kable_classic_2(full_width = F)
 ```
 
 ```{r}
