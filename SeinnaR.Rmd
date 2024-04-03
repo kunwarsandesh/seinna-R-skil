@@ -7,8 +7,12 @@ output: Rmarkdown
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+library(lubridate)
+library(kableExtra)
 ```
 
+Hluti I
 
 ```{r}
 #a
@@ -41,10 +45,48 @@ serbyli_count <- bss_selected %>%
 serbyli_count %>%
   kbl(col.names = c("Póstnr.", "Fjöldi Sérbýla"), align = "c") %>%
   kable_classic_2(full_width = F)
+
+#f-g
+set.seed(37) # þið setjið happatöluna ykkar hér inn
+bss_selected %>% 
+group_by(postnr) %>%
+sample_n(size = 200) -> urtak
+
 ```
+
+Hluti II
+
+```{r}
+#h
+fjolbyli_count <- urtak %>%
+  filter(tegund == "Fjolbyli") %>%
+  group_by(postnr) %>%
+  summarise(fjoldi_fjolbyli = n())
+
+serbyli_count <- urtak %>%
+  filter(tegund == "Serbyli") %>%
+  group_by(postnr) %>%
+  summarise(fjoldi_serbyli = n())
+
+byli_count <- right_join(fjolbyli_count, serbyli_count, by = "postnr")
+
+byli_count %>%
+  kbl(col.names = c("Póstnr.", "Fjöldi Sérbýla", "Fjöld fjölbýla"), align = "c") %>%
+  kable_classic_2(full_width = F)
+
+#i
+
+
+```
+
+Hluti III
 
 ```{r}
 
 ```
 
+Hluti IV
 
+```{r}
+
+```
