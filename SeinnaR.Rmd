@@ -75,6 +75,13 @@ byli_count %>%
   kable_classic_2(full_width = F)
 
 #i
+percentage_table <- byli_count %>%
+  group_by(postnr) %>%
+  summarise(
+    `Serbyli prósent` = sum(fjoldi_serbyli) / (sum(fjoldi_serbyli) + sum(fjoldi_fjolbyli)) * 100,
+    `Fjolbyli prósent` = sum(fjoldi_fjolbyli) / (sum(fjoldi_serbyli) + sum(fjoldi_fjolbyli)) * 100
+  )
+
 
 
 ```
