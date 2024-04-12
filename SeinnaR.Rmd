@@ -1,8 +1,8 @@
 ---
 title: "SeinnaR"
 author: "stt27@hi.is"
-date: "now"
-output: Rmarkdown
+date: "`r Sys.Date()`"
+output: html_document
 ---
 
 ```{r setup, include=FALSE}
@@ -82,13 +82,32 @@ percentage_table <- byli_count %>%
     `Fjolbyli prósent` = sum(fjoldi_fjolbyli) / (sum(fjoldi_serbyli) + sum(fjoldi_fjolbyli)) * 100
   )
 
+#j
 
+#### Núlltilgáta(H0): Enginn munar er á hlutfalli fjölbýla í hverfunum þremur.
+# Móttilgáta (H1): Hlutfall fjölbýla er mismunandi í a.m.k. einu hverfi.
+
+# Búa til krosstöflu
+krosstofla <- table(urtak$postnr, urtak$tegund)
+
+# Chi-square próf
+chi_square_test <- chisq.test(krosstofla)
+
+# Prenta úttak prófsins
+chi_square_test
 
 ```
+Ekki er hægt að neita núlltilgátu því p-gildi er 0.2497 > 0.05
 
 Hluti III
 
 ```{r}
+#k
+
+# Núlltilgáta(H0): Ekki er munur á meðalfermetraverði fasteigna milli fjölbýlli og sérbýlis.
+# Núlltilgáta(H1): Munur er á meðalfermetraverði fasteigna milli fjölbýlli og sérbýlis.
+
+
 
 ```
 
